@@ -3,21 +3,45 @@ grammar compiladores;
 fragment LETRA: [A-Za-z];
 fragment DIGITO: [0-9];
 
+//Operadores
 PA: '(';
 PC: ')';
 LLA: '{';
 LLC: '}';
 PYC: ';';
-ASSIG: '=';
 COMA: ',';
+
+//Operaciones aritmeticas
 MULT : '*';
 DIV : '/';
 SUMA : '+';
 RESTA : '-';
 
+//Operaciones logicas
+AND : '&&';
+OR : '||';
+NOT : '!';
+ASSIG: '=';
+
+//Comparadores
+IGUAL: '=='; 
+DISTINTO: '!=';
+MENOR: '<';
+MAYOR: '>';
+
+//Tipo de datos
 INT: 'int';
 FLOAT: 'float';
 STRING: 'string';
+DOUBLE: 'double';
+
+//Estructuras de control
+IF : 'if';
+FOR : 'for';
+WHILE : 'while';
+
+//Funciones
+
 
 NUMERO: DIGITO+;
 
@@ -29,7 +53,9 @@ OTRO: .;
 
 prog: instrucciones EOF;
 
-instrucciones: instruccion instrucciones |;
+instrucciones: instruccion instrucciones 
+				|
+				;
 
 instruccion:
 	bloque PYC
@@ -50,7 +76,13 @@ declaracion:
 
 asignacion: ID ASSIG NUMERO;
 
-tdato: INT | FLOAT | STRING;
+tdato: INT | FLOAT | STRING | DOUBLE;
+
+// bloqueif : condicion bloque;
+
+// condicion: PA comparacion PC;
+
+// comparacion: ;
 
 // bloquewhile : PA comparacion/opal PC instruccion;
 
@@ -68,6 +100,8 @@ term: factor f;
 
 t:    SUMA term t 
 	| RESTA term t 
+	| AND term t
+	| OR term t
 	|
 	;
 
