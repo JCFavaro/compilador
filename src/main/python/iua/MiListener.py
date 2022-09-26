@@ -7,13 +7,17 @@ else:
 
 # This class defines a complete listener for a parse tree produced by compiladoresParser.
 class MiListener(ParseTreeListener):
+
+    # Enter a parse tree produced by compiladoresParser#term.
+    def exitTerm(self, ctx:compiladoresParser.TermContext):
+        print ("Term tiene " + str(ctx.getChildCount()) + " hijos")
+        print ("Term -> text |" + ctx.getText() + "|")
     
-     # Enter a parse tree produced by compiladoresParser#factor.
+    # Enter a parse tree produced by compiladoresParser#factor.
     def enterFactor(self, ctx:compiladoresParser.FactorContext):
-        print("Factor IN -> |" + ctx.getText() + "|")
+        print ("Factor IN -> |" + ctx.getText() + "|")
 
     # Exit a parse tree produced by compiladoresParser#factor.
     def exitFactor(self, ctx:compiladoresParser.FactorContext):
-        print("Factor OUT -> |" + ctx.getText() + "|")
-    
+        print ("Factor OUT -> |" + ctx.getText() + "|")
     

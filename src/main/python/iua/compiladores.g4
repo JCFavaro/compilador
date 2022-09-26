@@ -12,19 +12,20 @@ PYC: ';';
 COMA: ',';
 
 //Operaciones aritmeticas
-MULT : '*';
-DIV : '/';
-SUMA : '+';
-RESTA : '-';
+MULT: '*';
+DIV: '/';
+SUMA: '+';
+RESTA: '-';
+MOD: '%';
 
 //Operaciones logicas
-AND : '&&';
-OR : '||';
-NOT : '!';
+AND: '&&';
+OR: '||';
+NOT: '!';
 ASSIG: '=';
 
 //Comparadores
-IGUAL: '=='; 
+IGUAL: '==';
 DISTINTO: '!=';
 MENOR: '<';
 MAYOR: '>';
@@ -36,12 +37,11 @@ STRING: 'string';
 DOUBLE: 'double';
 
 //Estructuras de control
-IF : 'if';
-FOR : 'for';
-WHILE : 'while';
+IF: 'if';
+FOR: 'for';
+WHILE: 'while';
 
 //Funciones
-
 
 NUMERO: DIGITO+;
 
@@ -53,15 +53,12 @@ OTRO: .;
 
 prog: instrucciones EOF;
 
-instrucciones: instruccion instrucciones 
-				|
-				;
+instrucciones: instruccion instrucciones |;
 
 instruccion:
 	bloque PYC
 	| declaracion PYC
-	| asignacion PYC
-	; // | bloqueif | bloquefor | bloquewhile
+	| asignacion PYC; // | bloqueif | bloquefor | bloquewhile
 
 bloque: LLA instrucciones LLC;
 
@@ -74,7 +71,7 @@ declaracion:
 	| asignacion
 	| asignacion COMA declaracion;
 
-asignacion: ID ASSIG NUMERO;
+asignacion: ID ASSIG NUMERO | ID ASSIG ID;
 
 tdato: INT | FLOAT | STRING | DOUBLE;
 
@@ -88,9 +85,11 @@ tdato: INT | FLOAT | STRING | DOUBLE;
 
 //operacion aritmetica logica opal
 
-itop : oparit itop
-	| 
-	;
+itop: oparit itop |;
+
+oparitlog: predicado;
+
+predicado: |;
 
 oparit: exp;
 
@@ -98,16 +97,8 @@ exp: term t;
 
 term: factor f;
 
-t:    SUMA term t 
-	| RESTA term t 
-	| AND term t
-	| OR term t
-	|
-	;
+t: SUMA term t | RESTA term t | OR term t | factor;
 
 factor: ID | NUMERO | PA exp PC;
 
-f: MULT factor f 
-	| DIV factor f
-	|
-	;
+f: MULT factor f | DIV factor f | AND factor f | MOD factor f |;
