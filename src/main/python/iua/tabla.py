@@ -1,11 +1,15 @@
 from typing import Dict
 
 
-class Tabla():        
+class Tabla(object):
     
-    class __Tabla:
-        def _init_(self):
+    _instance = None
+    #Singleton
+    def __new__(self):
+        if self._instance is None:
+            self._instance = super(Tabla, self).__new__(self)
             self.ts = []
+        return self._instance
         
     def searchID(self, ID):
         for d in self.ts: #Aca busco en todos los contextos

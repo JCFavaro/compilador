@@ -3,6 +3,9 @@ from antlr4 import *
 from compiladoresLexer  import compiladoresLexer
 from compiladoresParser import compiladoresParser
 from MiListener import MiListener
+from tabla import Tabla
+
+tablaSimbolos = Tabla()
 
 def main(argv):
     # archivo = "input/entrada.txt"

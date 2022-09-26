@@ -85,7 +85,7 @@ tdato: INT | FLOAT | STRING | DOUBLE;
 
 //operacion aritmetica logica opal
 
-itop: oparit itop |;
+itop: oparit itop | EOF;
 
 oparitlog: predicado;
 
@@ -97,8 +97,21 @@ exp: term t;
 
 term: factor f;
 
-t: SUMA term t | RESTA term t | OR term t | factor;
+t: 	SUMA term t 
+	| RESTA term t 
+	| OR term t 
+	| factor
+	|
+	;
 
-factor: ID | NUMERO | PA exp PC;
+factor: ID 
+		| NUMERO 
+		| PA exp PC
+		;
 
-f: MULT factor f | DIV factor f | AND factor f | MOD factor f |;
+f: 	MULT factor f 
+	| DIV factor f 
+	| AND factor f 
+	| MOD factor f 
+	|
+	;
