@@ -62,23 +62,25 @@ instrucciones: 	instruccion instrucciones
 				;
 
 instruccion:
-	bloque PYC
-	| declaracion COMA
+	bloque
 	| declaracion PYC
-	| asignacion PYC
+	| asignacion PYC	
+	| deffuncion
+	| decfuncion
 	| bloqueif; // | bloquefor | bloquewhile
 
 bloque: LLA instrucciones LLC;
 
 declaracion:
-	tdato ID 
-	| tdato ID asignacion
-	| tdato ID 
-	| tdato asignacion 
-	| ID  // hay que ver esto es el caso int a,b,c,d;  
+	tdato ID
+	| tdato ID COMA	ID
+	| tdato ID COMA	ID declaracion
+	| ID COMA declaracion// hay que ver esto es el caso int a,b,c,d;  	
 	| ID
-	| asignacion
-	| asignacion COMA;
+	| tdato asignacion 
+	| tdato asignacion COMA declaracion
+	| asignacion COMA declaracion
+	| asignacion;
 
 asignacion: ID ASSIG NUMERO | ID ASSIG ID;
 
@@ -99,7 +101,7 @@ comparacion: ID oprelacionales NUMERO
 
 condicion: PA comparacion PC;
 
-bloqueif : IF condicion			
+bloqueif : IF condicion bloque	
 			;
 
 // bloquewhile : PA comparacion/opal PC instruccion;
@@ -140,3 +142,6 @@ f: 	MULT factor f
 	;
 
 //Funciones
+deffuncion: tdato ID PA PC PYC;
+
+decfuncion: tdato ID PA PC bloque;

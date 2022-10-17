@@ -25,7 +25,8 @@ class Tabla(object):
     def addContext(self):
         self.ts.append(dict())
     
-    def deleteContext(self):
+    def deleteContext(self):        
+        # self.ts[:len(self.ts)-1]
         self.ts[-1]
     
     
