@@ -13,6 +13,14 @@ class MiListener(ParseTreeListener):
     context = None
     tablaSimbolos = Tabla()
 
+     # Enter a parse tree produced by compiladoresParser#prog.
+    def enterProg(self, ctx:compiladoresParser.ProgContext):
+        pass
+
+    # Exit a parse tree produced by compiladoresParser#prog.
+    def exitProg(self, ctx:compiladoresParser.ProgContext):
+        pass
+
     # Enter a parse tree produced by compiladoresParser#term.
     def exitTerm(self, ctx:compiladoresParser.TermContext):
         print ("Term tiene " + str(ctx.getChildCount()) + " hijos")
@@ -29,9 +37,11 @@ class MiListener(ParseTreeListener):
         self.tablaSimbolos.deleteContext()
     
      # Enter a parse tree produced by compiladoresParser#bloque.
-    def enterBloque(self, ctx:compiladoresParser.BloqueContext):        
+    def enterBloque(self, ctx:compiladoresParser.BloqueContext):   
+        child = ctx.getChild()
+        print("Bloque In -> |" + child.getText() + "|")     
         self.tablaSimbolos.addContext()
 
     # Exit a parse tree produced by compiladoresParser#bloque.
     def exitBloque(self, ctx:compiladoresParser.BloqueContext):
-        self.tablaSimbolos.deleteContext()
+        self.tablaSimbolos.deleteContext() 

@@ -28,7 +28,10 @@ ASSIG: '=';
 IGUAL: '==';
 DISTINTO: '!=';
 MENOR: '<';
+MENORIGUAL: '<=';
 MAYOR: '>';
+MAYORIGUAL: '>=';
+
 
 //Tipo de datos
 INT: 'int';
@@ -42,6 +45,7 @@ FOR: 'for';
 WHILE: 'while';
 
 //Funciones
+RETURN: 'return';
 
 NUMERO: DIGITO+;
 
@@ -53,39 +57,58 @@ OTRO: .;
 
 prog: instrucciones EOF;
 
-instrucciones: instruccion instrucciones |;
+instrucciones: 	instruccion instrucciones 
+				|
+				;
 
 instruccion:
 	bloque PYC
+	| declaracion COMA
 	| declaracion PYC
-	| asignacion PYC; // | bloqueif | bloquefor | bloquewhile
+	| asignacion PYC
+	| bloqueif; // | bloquefor | bloquewhile
 
 bloque: LLA instrucciones LLC;
 
 declaracion:
-	tdato ID
-	| tdato ID COMA declaracion
-	| tdato asignacion
-	| ID COMA declaracion // hay que ver esto es el caso int a,b,c,d;  
+	tdato ID 
+	| tdato ID asignacion
+	| tdato ID 
+	| tdato asignacion 
+	| ID  // hay que ver esto es el caso int a,b,c,d;  
 	| ID
 	| asignacion
-	| asignacion COMA declaracion;
+	| asignacion COMA;
 
 asignacion: ID ASSIG NUMERO | ID ASSIG ID;
 
 tdato: INT | FLOAT | STRING | DOUBLE;
 
-// bloqueif : condicion bloque;
+oprelacionales: IGUAL 
+				| DISTINTO
+				| MENOR
+				| MAYOR
+				| AND
+				| OR
+				;
 
-// condicion: PA comparacion PC;
+comparacion: ID oprelacionales NUMERO
+			| NUMERO oprelacionales ID
+			| ID oprelacionales ID
+			;
 
-// comparacion: ;
+condicion: PA comparacion PC;
+
+bloqueif : IF condicion			
+			;
 
 // bloquewhile : PA comparacion/opal PC instruccion;
 
 //operacion aritmetica logica opal
 
-itop: oparit itop | EOF;
+itop: 	oparit itop 
+		| EOF
+		;
 
 oparitlog: predicado;
 
@@ -115,3 +138,5 @@ f: 	MULT factor f
 	| MOD factor f 
 	|
 	;
+
+//Funciones

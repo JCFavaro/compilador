@@ -1,3 +1,9 @@
-int a;
+int x = 0, a, b;
 
-a = 2;
+float z;
+
+int main(){
+
+if(x < a){};
+
+}

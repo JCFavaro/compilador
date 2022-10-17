@@ -9,7 +9,8 @@ tablaSimbolos = Tabla()
 
 def main(argv):
     # archivo = "input/entrada.txt"
-    archivo = "input/operaciones.txt"
+    # archivo = "input/operaciones.txt"
+    archivo = "input/test.c"
     if len(argv) > 1 :
         archivo = argv[1]
     input = FileStream(archivo)
@@ -18,7 +19,7 @@ def main(argv):
     parser = compiladoresParser(stream)
     miListener = MiListener()
     parser.addParseListener(miListener)
-    tree = parser.itop()
+    tree = parser.prog()
     print(tree.toStringTree(recog=parser))
 
 if __name__ == '__main__':
