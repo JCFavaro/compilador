@@ -23,6 +23,8 @@ AND: '&&';
 OR: '||';
 NOT: '!';
 ASSIG: '=';
+TRUE: 'true';
+FALSE: 'false';
 
 //Comparadores
 IGUAL: '==';
@@ -38,6 +40,7 @@ INT: 'int';
 FLOAT: 'float';
 STRING: 'string';
 DOUBLE: 'double';
+CHAR: 'char';
 
 //Estructuras de control
 IF: 'if';
@@ -57,7 +60,7 @@ OTRO: .;
 
 prog: instrucciones EOF;
 
-instrucciones: 	instruccion instrucciones 
+instrucciones: 	instruccion instrucciones 				
 				|
 				;
 
@@ -65,8 +68,8 @@ instruccion:
 	bloque
 	| declaracion PYC
 	| asignacion PYC	
-	| deffuncion
-	| decfuncion
+	| funciones
+	| funciones bloque
 	| bloqueif; // | bloquefor | bloquewhile
 
 bloque: LLA instrucciones LLC;
@@ -82,9 +85,9 @@ declaracion:
 	| asignacion COMA declaracion
 	| asignacion;
 
-asignacion: ID ASSIG NUMERO | ID ASSIG ID;
+asignacion: ID ASSIG NUMERO | ID ASSIG ID | ID ASSIG oparit;
 
-tdato: INT | FLOAT | STRING | DOUBLE;
+tdato: INT | FLOAT | STRING | DOUBLE | CHAR;
 
 oprelacionales: IGUAL 
 				| DISTINTO
@@ -97,14 +100,20 @@ oprelacionales: IGUAL
 comparacion: ID oprelacionales NUMERO
 			| NUMERO oprelacionales ID
 			| ID oprelacionales ID
+			| ID
+			| FALSE
+			| TRUE
 			;
 
-condicion: PA comparacion PC;
+condicion: PA comparacion PC
+		;			
 
 bloqueif : IF condicion bloque	
+			| IF (condicion (AND|OR) condicion)*
 			;
 
-// bloquewhile : PA comparacion/opal PC instruccion;
+bloquewhile : WHILE condicion 
+			;
 
 //operacion aritmetica logica opal
 
@@ -142,6 +151,12 @@ f: 	MULT factor f
 	;
 
 //Funciones
-deffuncion: tdato ID PA PC PYC;
+funciones: decfuncion | deffuncion;
 
-decfuncion: tdato ID PA PC bloque;
+parametro: tdato ID;
+
+decfuncion: tdato ID PA PC;
+
+deffuncion: tdato ID PA PC PYC; //Definicion, prototipo
+
+// llamadafuncion: ID PA (ID | tdato ID) PC

@@ -17,19 +17,12 @@ def main(argv):
         archivo = argv[1]
 
     input = FileStream(archivo)
-
     lexer = compiladoresLexer(input)
-
     stream = CommonTokenStream(lexer)
-
     parser = compiladoresParser(stream)
-
     miListener = MiListener()
-
     parser.addParseListener(miListener)
-
     tree = parser.prog()
-    
     miVisitor = MiVisitor()
     miVisitor.visitProg(tree)
 

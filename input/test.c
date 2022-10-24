@@ -1,8 +1,7 @@
 int x = 0, a, b;
 
-float z;
+float z = 2 + 3;
 
 int main(){
-    int c = 5;
+    int s = 4;    
 }
-

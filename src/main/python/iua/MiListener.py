@@ -1,4 +1,5 @@
 # Generated from /home/fava/Documents/IUA/3/DHS/compilador/src/main/python/iua/compiladores.g4 by ANTLR 4.9.2
+from ast import Delete
 from multiprocessing.connection import deliver_challenge
 from antlr4 import *
 from tabla import Tabla
@@ -15,11 +16,11 @@ class MiListener(ParseTreeListener):
 
      # Enter a parse tree produced by compiladoresParser#prog.
     def enterProg(self, ctx:compiladoresParser.ProgContext):
-        pass
+        self.tablaSimbolos.addContext()
 
     # Exit a parse tree produced by compiladoresParser#prog.
     def exitProg(self, ctx:compiladoresParser.ProgContext):
-        pass
+        self.tablaSimbolos.deleteContext()
 
     # Enter a parse tree produced by compiladoresParser#term.
     def exitTerm(self, ctx:compiladoresParser.TermContext):
@@ -38,8 +39,8 @@ class MiListener(ParseTreeListener):
     
      # Enter a parse tree produced by compiladoresParser#bloque.
     def enterBloque(self, ctx:compiladoresParser.BloqueContext):   
-        child = ctx.getChild()
-        print("Bloque In -> |" + child.getText() + "|")     
+        # child = ctx.getChild()
+        # print("Bloque In -> |" + child.getText() + "|")     
         self.tablaSimbolos.addContext()
 
     # Exit a parse tree produced by compiladoresParser#bloque.

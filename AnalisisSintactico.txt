@@ -97,5 +97,3 @@ Acciones posibles:
   $ ( s ) s              $ Reducir
   $ s                    $ Reducir
   $ si                   $ Ok
-
-  
