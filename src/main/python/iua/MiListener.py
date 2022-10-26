@@ -38,9 +38,7 @@ class MiListener(ParseTreeListener):
         self.tablaSimbolos.deleteContext()
     
      # Enter a parse tree produced by compiladoresParser#bloque.
-    def enterBloque(self, ctx:compiladoresParser.BloqueContext):   
-        # child = ctx.getChild()
-        # print("Bloque In -> |" + child.getText() + "|")     
+    def enterBloque(self, ctx:compiladoresParser.BloqueContext):           
         self.tablaSimbolos.addContext()
 
     # Exit a parse tree produced by compiladoresParser#bloque.

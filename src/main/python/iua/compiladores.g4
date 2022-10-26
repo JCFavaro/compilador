@@ -25,6 +25,8 @@ NOT: '!';
 ASSIG: '=';
 TRUE: 'true';
 FALSE: 'false';
+INCREMENTO: '++';
+DECREMENTO: '--';
 
 //Comparadores
 IGUAL: '==';
@@ -68,9 +70,12 @@ instruccion:
 	bloque
 	| declaracion PYC
 	| asignacion PYC	
-	| funciones
-	| funciones bloque
-	| bloqueif; // | bloquefor | bloquewhile
+	| deffuncion
+	| decfuncion bloque
+	| llamadafuncion
+	| bloqueif
+	| bloquefor
+	| bloquewhile; 
 
 bloque: LLA instrucciones LLC;
 
@@ -105,6 +110,9 @@ comparacion: ID oprelacionales NUMERO
 			| TRUE
 			;
 
+condicionFor: PA tdato asignacion PYC comparacion PYC ID INCREMENTO PC
+			| PA tdato asignacion PYC comparacion PYC INCREMENTO ID PC;
+
 condicion: PA comparacion PC
 		;			
 
@@ -112,8 +120,11 @@ bloqueif : IF condicion bloque
 			| IF (condicion (AND|OR) condicion)*
 			;
 
-bloquewhile : WHILE condicion 
+bloquewhile : WHILE condicion bloque
 			;
+
+bloquefor: FOR condicionFor bloque
+		 ;
 
 //operacion aritmetica logica opal
 
@@ -133,7 +144,7 @@ term: factor f;
 
 t: 	SUMA term t 
 	| RESTA term t 
-	| OR term t 
+	| OR term t 	
 	| factor
 	|
 	;
@@ -151,12 +162,11 @@ f: 	MULT factor f
 	;
 
 //Funciones
-funciones: decfuncion | deffuncion;
+decfuncion: tdato ID PA (ID | NUMERO | TRUE | FALSE | COMA)* PC
+			| tdato ID PA ((ID | NUMERO | TRUE | FALSE)+ COMA (ID | NUMERO | TRUE | FALSE)+)* PC;
 
-parametro: tdato ID;
+deffuncion: tdato ID PA (ID | tdato ID | NUMERO)* PC PYC
+			| tdato ID PA ((ID | tdato ID | NUMERO)+ COMA (ID | tdato ID | NUMERO)+)* PC PYC; //Definicion, prototipo
 
-decfuncion: tdato ID PA PC;
-
-deffuncion: tdato ID PA PC PYC; //Definicion, prototipo
-
-// llamadafuncion: ID PA (ID | tdato ID) PC
+llamadafuncion: ID PA (ID | tdato ID | NUMERO | COMA)* PC PYC
+				| ID PA ((ID | tdato ID | NUMERO | COMA)+ COMA (ID | tdato ID | NUMERO | COMA)+)* PC PYC;

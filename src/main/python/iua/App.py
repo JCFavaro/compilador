@@ -27,6 +27,10 @@ def main(argv):
     miVisitor.visitProg(tree)
 
     print(tree.toStringTree(recog=parser))
+    
+    f = open("tablaDeSimbolos.txt", "w")
+    f.write(tree.toStringTree(recog=parser))
+    f.close()
 
 if __name__ == '__main__':
     main(sys.argv)

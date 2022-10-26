@@ -22,8 +22,7 @@ class Tabla(object):
             return ID in d
         
     def addID(self, variable):        
-        # if variable.nombre in self.ts[-1]: print("Variable declarada mas de una vez")
-        
+        # if variable.nombre in self.ts[-1]: print("Variable declarada mas de una vez")        
         self.ts[-1][variable.nombre, variable] 
     
     def addContext(self):
