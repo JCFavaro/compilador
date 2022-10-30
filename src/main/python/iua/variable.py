@@ -1,10 +1,15 @@
-from mailbox import NoSuchMailboxError
+from id import ID
 
-
-class Variable(id):
+class Variable(ID):
+    pass
     
-    def __init__(self, nombre, tipo):
-        super().__init__(nombre, tipo)
-        self.nombre = nombre
-        self.tipo = tipo
+    # def __init__(self, nombre, tipo, inicializada, usada):
+    #     super().__init__(nombre, tipo, inicializada, usada)
+    #     self.nombre = nombre
+    #     self.tipo = tipo
+    #     self.inicializada = inicializada
+    #     self.usada = usada
         
+    
+    # def __str__(self):
+    #     return "Variable: " + self.nombre + ", Tipo " + self.tipo + ", Inicializada: " + str(self.inicializada) + ", Usada: " + str(self.usada)

@@ -1,6 +1,9 @@
-class Funcion(id):
+from id import ID
+
+class Funcion(ID):
     
-    def __init__(self, parametros):
-        self.parametros = parametros
-        super().__init__()
-        
+    parametros = []  
+    
+    def addParametro(self, nombre, tipo):
+        self.parametros.append(dict())
+        self.parametros[-1].update({"Tipo: ": tipo, "Nombre: ": nombre})

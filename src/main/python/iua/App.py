@@ -28,9 +28,7 @@ def main(argv):
 
     print(tree.toStringTree(recog=parser))
     
-    f = open("tablaDeSimbolos.txt", "w")
-    f.write(tree.toStringTree(recog=parser))
-    f.close()
+    tree.toStringTree(recog=parser)
 
 if __name__ == '__main__':
     main(sys.argv)

@@ -79,18 +79,18 @@ instruccion:
 
 bloque: LLA instrucciones LLC;
 
+asignacion: ID ASSIG NUMERO | ID ASSIG ID | ID ASSIG oparit;
+
 declaracion:
 	tdato ID
 	| tdato ID COMA	ID
 	| tdato ID COMA	ID declaracion
-	| ID COMA declaracion// hay que ver esto es el caso int a,b,c,d;  	
+	| ID COMA declaracion
 	| ID
 	| tdato asignacion 
 	| tdato asignacion COMA declaracion
 	| asignacion COMA declaracion
 	| asignacion;
-
-asignacion: ID ASSIG NUMERO | ID ASSIG ID | ID ASSIG oparit;
 
 tdato: INT | FLOAT | STRING | DOUBLE | CHAR;
 
