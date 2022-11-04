@@ -69,9 +69,9 @@ instrucciones: 	instruccion instrucciones
 instruccion:
 	bloque
 	| declaracion PYC
-	| asignacion PYC	
-	| deffuncion
-	| decfuncion bloque
+	| asignacion PYC		
+	| decfuncion
+	| deffuncion	
 	| llamadafuncion
 	| bloqueif
 	| bloquefor
@@ -79,18 +79,17 @@ instruccion:
 
 bloque: LLA instrucciones LLC;
 
-asignacion: ID ASSIG NUMERO | ID ASSIG ID | ID ASSIG oparit;
+asignacion:  ID ASSIG NUMERO 
+			| ID ASSIG ID 
+			| ID ASSIG oparit;
 
 declaracion:
-	tdato ID
-	| tdato ID COMA	ID
-	| tdato ID COMA	ID declaracion
-	| ID COMA declaracion
-	| ID
+	tdato ID	
+	| tdato (ID COMA*)+ 	
 	| tdato asignacion 
 	| tdato asignacion COMA declaracion
-	| asignacion COMA declaracion
-	| asignacion;
+	| asignacion COMA declaracion	
+	;
 
 tdato: INT | FLOAT | STRING | DOUBLE | CHAR;
 
@@ -162,11 +161,17 @@ f: 	MULT factor f
 	;
 
 //Funciones
-decfuncion: tdato ID PA (ID | NUMERO | TRUE | FALSE | COMA)* PC
-			| tdato ID PA ((ID | NUMERO | TRUE | FALSE)+ COMA (ID | NUMERO | TRUE | FALSE)+)* PC;
+decfuncion:  tdato ID PA PC PYC
+			| tdato ID PA tdato ID PC PYC			
+			| tdato ID PA ((tdato ID)+ COMA*)* PC PYC
+			;
 
-deffuncion: tdato ID PA (ID | tdato ID | NUMERO)* PC PYC
-			| tdato ID PA ((ID | tdato ID | NUMERO)+ COMA (ID | tdato ID | NUMERO)+)* PC PYC; //Definicion, prototipo
+deffuncion: tdato ID PA PC bloque
+			| tdato ID PA tdato ID PC bloque
+			| tdato ID PA ((tdato ID)+ COMA*)* PC bloque			
+			; 
 
-llamadafuncion: ID PA (ID | tdato ID | NUMERO | COMA)* PC PYC
-				| ID PA ((ID | tdato ID | NUMERO | COMA)+ COMA (ID | tdato ID | NUMERO | COMA)+)* PC PYC;
+llamadafuncion: ID PA PC PYC
+				| ID PA ID PC PYC
+				| ID PA ((ID)+ COMA*)* PC PYC
+				;

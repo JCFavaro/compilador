@@ -7,9 +7,6 @@ class ID:
     inicializada = False
     usada = False
         
-    def __str__(self):
-        return "Nombre " +  self.nombre + ", Tipo " + self.tipo + ", Inicializada: ", self.inicializada,", Usada: ", self.usada
-        
     @property
     def nombre(self, val):
         self.nombre = val
@@ -37,3 +34,6 @@ class ID:
     
     def usada(self):
         return self.usada
+    
+    def getDescripcion(self):
+        return str(self.tipo) + " " + str(self.nombre) + " ~~ fue inicializada: " + str(self.inicializada) + " ~~ fue usada: " + str(self.usada)

@@ -1,2 +1,33 @@
-[{'Nombre': 'main', 'Tipo': 'int', 'Inicializada': True, 'Usada': False}, {'Nombre': 'b', 'Tipo': 'int', 'Inicializada': False, 'Usada': False}, {'Nombre': 'c', 'Tipo': 'float', 'Inicializada': True, 'Usada': False}]
-[{'Nombre': 'main', 'Tipo': 'int', 'Inicializada': True, 'Usada': False}, {'Nombre': 'b', 'Tipo': 'int', 'Inicializada': False, 'Usada': False}]
+------Contexto 0 -------
+------Fin del Contexto 0 -------
+
+------Contexto 1 -------
+------Fin del Contexto 1 -------
+
+------Contexto 0 -------
+------Fin del Contexto 0 -------
+
+------Contexto 1 -------
+------Fin del Contexto 1 -------
+
+------Contexto 2 -------
+------Fin del Contexto 2 -------
+
+------Contexto 3 -------
+------Fin del Contexto 3 -------
+
+------Contexto 0 -------
+------Fin del Contexto 0 -------
+
+------Contexto 1 -------
+------Fin del Contexto 1 -------
+
+------Contexto 2 -------
+------Fin del Contexto 2 -------
+
+------Contexto 0 -------
+------Fin del Contexto 0 -------
+
+------Contexto 1 -------
+------Fin del Contexto 1 -------
+
