@@ -2,3 +2,30 @@
 int suma ~~ fue inicializada: True ~~ fue usada: False
 ------ Fin Contexto -------
 
+------ Inicio Contexto -------
+float ff ~~ fue inicializada: True ~~ fue usada: False
+------ Fin Contexto -------
+
+------ Inicio Contexto -------
+int sumando ~~ fue inicializada: True ~~ fue usada: True
+------ Fin Contexto -------
+
+------ Inicio Contexto -------
+float probando ~~ fue inicializada: False ~~ fue usada: False
+------ Fin Contexto -------
+
+------ Inicio Contexto -------
+int unavariable ~~ fue inicializada: True ~~ fue usada: True
+int otravariable ~~ fue inicializada: True ~~ fue usada: False
+float a ~~ fue inicializada: True ~~ fue usada: False
+float b ~~ fue inicializada: False ~~ fue usada: False
+float c ~~ fue inicializada: False ~~ fue usada: False
+float d ~~ fue inicializada: False ~~ fue usada: False
+int p ~~ fue inicializada: False ~~ fue usada: False
+------ Fin Contexto -------
+
+------ Inicio Contexto -------
+int funcionSuma ~~ fue inicializada: True ~~ fue usada: True
+int main ~~ fue inicializada: True ~~ fue usada: False
+------ Fin Contexto -------
+

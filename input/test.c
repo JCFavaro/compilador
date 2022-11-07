@@ -9,7 +9,7 @@ int main()
     float a, b, c, d;
     int p;
 
-    int a = 200;
+    a = 200;
 
     funcionSuma(unavariable, unavariable);
 
@@ -18,7 +18,7 @@ int main()
         int sumando = 5 + unavariable;
 
         while(unavariable){
-            float ff = unavariable + sumando + 3 + 4;
+            float ff = unavariable + sumando - 3 * 4;
         }
 
     }

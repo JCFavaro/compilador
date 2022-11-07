@@ -7,6 +7,7 @@ from antlr4 import *
 from tabla import Tabla
 from funcion import Funcion
 from variable import Variable
+import re 
 if __name__ is not None and "." in __name__:
     from .compiladoresParser import compiladoresParser
 else:
@@ -115,27 +116,19 @@ class MiListener(ParseTreeListener):
         variableAsignada = self.tablaSimbolos.searchIDLocal(ctx.getChild(0))        
         
         if variableAsignada != None:
-            variableAsignada.inicializada = True                    
+            variableAsignada.inicializada = True                               
 
-        if ctx.getChild(2).getChild(0) != None: #Asignacion con operaciones             
-            if ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0) != None:
-                try: #Busco variables del lado derecho, PRIMER OPERANDO, si no es numero al except                
-                        float(ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0)) 
+        if ctx.getChild(2).getChild(0) != None: #Asignacion con operaciones                         
+            operandos = ctx.getChild(2).getText()            
+            aux1 = re.split("[+*/-]", operandos)            
+            for op1 in aux1:                
+                try:
+                    float(op1)
                 except:
-                        variableUsada = Variable()
-                        keyABuscar = ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0) 
-                        variableUsada = self.tablaSimbolos.searchIDLocal(keyABuscar)                          
-                        if variableUsada != None:
-                            variableUsada.usada = True
-            if ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0) != None:
-                try: #Busco variables en el segundo operando
-                    float(ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0))            
-                except:
-                    variableUsada = Variable()     
-                    keyABuscar = ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0)                
-                    variableUsada = self.tablaSimbolos.searchIDLocal(keyABuscar)                                         
-                    if variableUsada != None:
-                        variableUsada.usada = True
+                    variableUsada = Variable()
+                    variableUsada = self.tablaSimbolos.searchIDLocal(op1)                              
+                    if variableUsada != None:                        
+                        variableUsada.usada = True                                               
         else: #Asignacion Sin operaciones ej: a = 3
             try:
                 float(ctx.getChild(2))
