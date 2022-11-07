@@ -19,8 +19,8 @@ class Tabla(object):
     def searchIDLocal(self, ID): #Busco en solo 1 contexto            
         for ctx in reversed(self.ts): #reversed para empezar desde -1
             keys = ctx.keys() 
-            for key in keys:                                                
-                if ID == str(key):  
+            for key in keys:                
+                if str(ID) == str(key):  
                     return ctx[key]                
                                                 
     def addID(self, ID):                       
@@ -38,7 +38,6 @@ class Tabla(object):
             keys = ctx.keys()
             values += "------ Inicio Contexto -------\n"
             for key in keys:                      
-                print("Las descripcion de", key, "es", ctx[key].getDescripcion())
                 values += ctx[key].getDescripcion() + "\n"
             values += "------ Fin Contexto -------\n\n"            
         return values

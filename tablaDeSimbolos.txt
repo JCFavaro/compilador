@@ -7,13 +7,13 @@ float ff ~~ fue inicializada: True ~~ fue usada: False
 ------ Fin Contexto -------
 
 ------ Inicio Contexto -------
-int sumando ~~ fue inicializada: True ~~ fue usada: False
+int sumando ~~ fue inicializada: True ~~ fue usada: True
 ------ Fin Contexto -------
 
 ------ Inicio Contexto -------
-int unavariable ~~ fue inicializada: True ~~ fue usada: False
+int unavariable ~~ fue inicializada: True ~~ fue usada: True
 int otravariable ~~ fue inicializada: True ~~ fue usada: False
-float a ~~ fue inicializada: False ~~ fue usada: False
+float a ~~ fue inicializada: True ~~ fue usada: False
 float b ~~ fue inicializada: False ~~ fue usada: False
 float c ~~ fue inicializada: False ~~ fue usada: False
 float d ~~ fue inicializada: False ~~ fue usada: False

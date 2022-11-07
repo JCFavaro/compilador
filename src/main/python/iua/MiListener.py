@@ -102,9 +102,8 @@ class MiListener(ParseTreeListener):
     def exitAsignacion(self, ctx:compiladoresParser.AsignacionContext):     
         
         variableAsignada = Variable()
-                              
-        
-        variableAsignada = self.tablaSimbolos.searchIDLocal(ctx.getChild(0))                
+                                      
+        variableAsignada = self.tablaSimbolos.searchIDLocal(ctx.getChild(0))        
         
         if variableAsignada != None:
             variableAsignada.inicializada = True
@@ -114,16 +113,18 @@ class MiListener(ParseTreeListener):
                 try: #Busco variables del lado derecho, PRIMER OPERANDO, si no es numero al except                
                         float(ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0)) 
                 except:
-                        variableUsada = Variable()   
-                        variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0))                                                
+                        variableUsada = Variable()
+                        keyABuscar = ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0) 
+                        variableUsada = self.tablaSimbolos.searchIDLocal(keyABuscar)                          
                         if variableUsada != None:
                             variableUsada.usada = True
             if ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0) != None:
                 try: #Busco variables en el segundo operando
                     float(ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0))            
                 except:
-                    variableUsada = Variable()                     
-                    variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0))                
+                    variableUsada = Variable()     
+                    keyABuscar = ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0)                
+                    variableUsada = self.tablaSimbolos.searchIDLocal(keyABuscar)                                         
                     if variableUsada != None:
                         variableUsada.usada = True
         else: #Asignacion Sin operaciones ej: a = 3

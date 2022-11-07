@@ -9,6 +9,8 @@ int main()
     float a, b, c, d;
     int p;
 
+    a = 200;
+
     funcionSuma(unavariable, unavariable);
 
     if (unavariable > 0)
