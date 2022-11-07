@@ -14,7 +14,7 @@ else:
 
 # This class defines a complete listener for a parse tree produced by compiladoresParser.
 class MiListener(ParseTreeListener):
-    
+
     context = None
     tablaSimbolos = Tabla()
     f = open("tablaDeSimbolos.txt", "w")    
@@ -29,11 +29,11 @@ class MiListener(ParseTreeListener):
         self.f.write(self.tablaSimbolos.ctxString())        
         self.tablaSimbolos.deleteContext()        
         self.f.close()
-        
+
     # Enter a parse tree produced by compiladoresParser#term.
     def exitTerm(self, ctx:compiladoresParser.TermContext):        
         pass
-        
+
     # Enter a parse tree produced by compiladoresParser#factor.
     def enterFactor(self, ctx:compiladoresParser.FactorContext):        
         pass
@@ -41,15 +41,15 @@ class MiListener(ParseTreeListener):
     # Exit a parse tree produced by compiladoresParser#factor.
     def exitFactor(self, ctx:compiladoresParser.FactorContext):        
         pass
-    
+
      # Enter a parse tree produced by compiladoresParser#instruccion.
     def enterInstruccion(self, ctx:compiladoresParser.InstruccionContext):
         pass
-        
+
     # Exit a parse tree produced by compiladoresParser#instruccion.
     def exitInstruccion(self, ctx:compiladoresParser.InstruccionContext):                                      
         pass                   
-    
+
      # Enter a parse tree produced by compiladoresParser#bloque.
     def enterBloque(self, ctx:compiladoresParser.BloqueContext):                   
         self.tablaSimbolos.addContext()
@@ -59,7 +59,7 @@ class MiListener(ParseTreeListener):
         print("termina el bloque " + ctx.getText())
         self.f.write(self.tablaSimbolos.ctxString()) 
         self.tablaSimbolos.deleteContext()        
-                
+
      # Enter a parse tree produced by compiladoresParser#declaracion.
     def enterDeclaracion(self, ctx:compiladoresParser.DeclaracionContext):
         pass                              
@@ -73,7 +73,10 @@ class MiListener(ParseTreeListener):
             variable.nombre = ctx.getChild(1).getChild(0)
             variable.inicializada = True
             variable.usada = False
-            self.tablaSimbolos.addID(variable)
+            if self.tablaSimbolos.searchIDLocal(variable.nombre) == None:
+                self.tablaSimbolos.addID(variable)
+            else:
+                raise Exception("Variable declarada varias veces")
         #Para variables declaradas
         elif ctx.getChild(1).getChild(0) == None and ctx.getChildCount() < 3:  
             for data in range(0, ctx.getChildCount()):            
@@ -82,8 +85,11 @@ class MiListener(ParseTreeListener):
                     variable.nombre = str(ctx.getChild(data))                                
                     variable.tipo = str(ctx.getChild(0).getChild(0))
                     variable.inicializada = False
-                    variable.usada = False                    
-                    self.tablaSimbolos.addID(variable)             
+                    variable.usada = False                                        
+                    if self.tablaSimbolos.searchIDLocal(variable.nombre) == None:
+                        self.tablaSimbolos.addID(variable)
+                    else:
+                        raise Exception("Variable declarada varias veces")
         else: #Significa que hay mas de una variable declarada int a,b,c...;
             for data in range(1, ctx.getChildCount(), 2):
                 variable = Variable()       
@@ -92,7 +98,10 @@ class MiListener(ParseTreeListener):
                 variable.usada = False                                    
                 if ctx.getChild(data).getChildCount() == 0:
                     variable.nombre = str(ctx.getChild(data))                    
-                    self.tablaSimbolos.addID(variable)
+                    if self.tablaSimbolos.searchIDLocal(variable.nombre) == None:
+                        self.tablaSimbolos.addID(variable)
+                    else:
+                        raise Exception("Variable declarada varias veces")
 
     # Enter a parse tree produced by compiladoresParser#asignacion.
     def enterAsignacion(self, ctx:compiladoresParser.AsignacionContext):
@@ -100,14 +109,14 @@ class MiListener(ParseTreeListener):
 
     # Exit a parse tree produced by compiladoresParser#asignacion.
     def exitAsignacion(self, ctx:compiladoresParser.AsignacionContext):     
-        
+
         variableAsignada = Variable()
-                                      
+
         variableAsignada = self.tablaSimbolos.searchIDLocal(ctx.getChild(0))        
         
         if variableAsignada != None:
-            variableAsignada.inicializada = True
-        
+            variableAsignada.inicializada = True                    
+
         if ctx.getChild(2).getChild(0) != None: #Asignacion con operaciones             
             if ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0) != None:
                 try: #Busco variables del lado derecho, PRIMER OPERANDO, si no es numero al except                
@@ -135,7 +144,7 @@ class MiListener(ParseTreeListener):
                 variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2))
                 if variableUsada != None:
                     variableUsada.usada = True
-        
+
         # Enter a parse tree produced by compiladoresParser#decfuncion.
     def enterDecfuncion(self, ctx:compiladoresParser.DecfuncionContext):
         pass
@@ -144,7 +153,7 @@ class MiListener(ParseTreeListener):
     def exitDecfuncion(self, ctx:compiladoresParser.DecfuncionContext):                                 
         funcion = Funcion()                        
         tipoParametro = ""                                                  
-                                
+
         for data in range(3, ctx.getChildCount() - 2):  
                 if ctx.getChild(data).getChildCount() != 0:                                                   
                     dato = ctx.getChild(data).getChild(0)
@@ -154,14 +163,17 @@ class MiListener(ParseTreeListener):
                     dato = ctx.getChild(data)
                     if(str(dato) != ","):
                         funcion.addParametro(str(dato), tipoParametro)                        
-                
+
         funcion.tipo = str(ctx.getChild(0).getChild(0))
         funcion.nombre = str(ctx.getChild(1))                       
-                                   
+
         funcion.inicializada = True
         funcion.usada = False
-                
-        self.tablaSimbolos.addID(funcion)  
+
+        if self.tablaSimbolos.searchIDLocal(funcion.nombre) == None:
+            self.tablaSimbolos.addID(funcion)
+        else:
+            raise Exception("Funcion declarada varias veces")       
 
     # Enter a parse tree produced by compiladoresParser#deffuncion.
     def enterDeffuncion(self, ctx:compiladoresParser.DeffuncionContext):
@@ -171,10 +183,10 @@ class MiListener(ParseTreeListener):
     def exitDeffuncion(self, ctx:compiladoresParser.DeffuncionContext):          
         funcion = Funcion()                        
         tipoParametro = ""                    
-        
+
         funcion.tipo = str(ctx.getChild(0).getChild(0))
         funcion.nombre = str(ctx.getChild(1))       
-                        
+
         if ctx.getChildCount() > 5:    
             for data in range(3, ctx.getChildCount() - 2):  
                     if ctx.getChild(data).getChildCount() != 0:                                                   
@@ -185,11 +197,14 @@ class MiListener(ParseTreeListener):
                         dato = ctx.getChild(data)
                         if(str(dato) != ","):
                             funcion.addParametro(str(dato), tipoParametro)                        
-                
+
         funcion.inicializada = True
         funcion.usada = False 
-                
-        self.tablaSimbolos.addID(funcion)        
+
+        if self.tablaSimbolos.searchIDLocal(funcion.nombre) == None:
+            self.tablaSimbolos.addID(funcion)
+        else:
+            raise Exception("Funcion declarada varias veces")         
 
     # Enter a parse tree produced by compiladoresParser#llamadafuncion.
     def enterLlamadafuncion(self, ctx:compiladoresParser.LlamadafuncionContext):
@@ -198,11 +213,10 @@ class MiListener(ParseTreeListener):
     # Exit a parse tree produced by compiladoresParser#llamadafuncion.
     def exitLlamadafuncion(self, ctx:compiladoresParser.LlamadafuncionContext):
         funcion = Funcion()         
-                
+
         nombre = str(ctx.getChild(0))
-                        
+
         funcion = self.tablaSimbolos.searchIDLocal(nombre)
-        
+
         if funcion != None:
-            funcion.usada = True        
-        
+            funcion.usada = True

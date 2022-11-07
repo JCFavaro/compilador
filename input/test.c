@@ -9,15 +9,21 @@ int main()
     float a, b, c, d;
     int p;
 
-    a = 200;
+    int a = 200;
 
     funcionSuma(unavariable, unavariable);
 
     if (unavariable > 0)
     {
         int sumando = 5 + unavariable;
+
         while(unavariable){
-            float ff = unavariable + sumando;
+            float ff = unavariable + sumando + 3 + 4;
         }
+
+    }
+
+    for(int i = 0; i < 5; i++){
+        float probando;
     }
 }

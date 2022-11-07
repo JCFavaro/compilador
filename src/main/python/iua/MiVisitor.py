@@ -5,13 +5,13 @@ from compiladoresVisitor import compiladoresVisitor
 class MiVisitor(compiladoresVisitor):
         
     contexto = 0
-        
+
     def visitProg(self, ctx:compiladoresParser.ProgContext):
         print("Comienza el programa")
         r = super().visitProg(ctx)                
         print("Finaliza el programa")
         return r
-    
+
     def visitBloque(self, ctx:compiladoresParser.BloqueContext):
         self.contexto += 1
         print("\tEntramos al contexto " + str(self.contexto))
@@ -22,7 +22,6 @@ class MiVisitor(compiladoresVisitor):
         r = super().visitInstrucciones(ctx.getChild(1))    
         print("\tSalimos del contexto " + str(self.contexto))
         self.contexto -= 1
-        return 
-    
+        return
     
     

@@ -12,17 +12,17 @@ class Tabla(object):
             self._instance = super(Tabla, self).__new__(self)            
             self.ts = [dict()]
         return self._instance
-        
+
     def searchID(self, ID):#Aca busco en todos los contextos            
-        return ID in self.ts   
+        return ID in self.ts
                         
     def searchIDLocal(self, ID): #Busco en solo 1 contexto            
         for ctx in reversed(self.ts): #reversed para empezar desde -1
-            keys = ctx.keys() 
+            keys = ctx.keys()
             for key in keys:                
-                if str(ID) == str(key):  
-                    return ctx[key]                
-                                                
+                if str(ID) == str(key):
+                    return ctx[key]                                
+     
     def addID(self, ID):                       
         self.ts[-1][ID.nombre] = ID        
         
