@@ -10,7 +10,7 @@ class Tabla(object):
     def __new__(self):
         if self._instance is None:
             self._instance = super(Tabla, self).__new__(self)            
-            self.ts = []
+            self.ts = [dict()]
         return self._instance
         
     def searchID(self, ID):#Aca busco en todos los contextos            
@@ -32,9 +32,9 @@ class Tabla(object):
     def deleteContext(self):                
         self.ts.pop()
     
-    def ctxString(self):        
-        for ctx in self.ts:         
-            values = ""                           
+    def ctxString(self):                                  
+        for ctx in self.ts:  
+            values = ""               
             keys = ctx.keys()
             values += "------ Inicio Contexto -------\n"
             for key in keys:                      

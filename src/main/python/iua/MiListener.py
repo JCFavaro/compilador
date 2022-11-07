@@ -21,11 +21,12 @@ class MiListener(ParseTreeListener):
 
      # Enter a parse tree produced by compiladoresParser#prog.
     def enterProg(self, ctx:compiladoresParser.ProgContext):                
-        self.tablaSimbolos.addContext()
+        pass
 
     # Exit a parse tree produced by compiladoresParser#prog.
     def exitProg(self, ctx:compiladoresParser.ProgContext):                         
         print("Exit prog " + ctx.getText()) 
+        self.f.write(self.tablaSimbolos.ctxString())        
         self.tablaSimbolos.deleteContext()        
         self.f.close()
         
@@ -47,17 +48,16 @@ class MiListener(ParseTreeListener):
         
     # Exit a parse tree produced by compiladoresParser#instruccion.
     def exitInstruccion(self, ctx:compiladoresParser.InstruccionContext):                                      
-        pass
-                   
+        pass                   
+    
      # Enter a parse tree produced by compiladoresParser#bloque.
     def enterBloque(self, ctx:compiladoresParser.BloqueContext):                   
         self.tablaSimbolos.addContext()
 
-
     # Exit a parse tree produced by compiladoresParser#bloque.
     def exitBloque(self, ctx:compiladoresParser.BloqueContext):       
-        print("termina el bloque " + ctx.getText())            
-        self.f.write(self.tablaSimbolos.ctxString())
+        print("termina el bloque " + ctx.getText())
+        self.f.write(self.tablaSimbolos.ctxString()) 
         self.tablaSimbolos.deleteContext()        
                 
      # Enter a parse tree produced by compiladoresParser#declaracion.
