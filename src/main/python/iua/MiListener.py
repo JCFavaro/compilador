@@ -21,7 +21,7 @@ class MiListener(ParseTreeListener):
 
      # Enter a parse tree produced by compiladoresParser#prog.
     def enterProg(self, ctx:compiladoresParser.ProgContext):                
-        pass
+        self.tablaSimbolos.addContext()
 
     # Exit a parse tree produced by compiladoresParser#prog.
     def exitProg(self, ctx:compiladoresParser.ProgContext):                         
@@ -44,19 +44,20 @@ class MiListener(ParseTreeListener):
      # Enter a parse tree produced by compiladoresParser#instruccion.
     def enterInstruccion(self, ctx:compiladoresParser.InstruccionContext):
         pass
-
+        
     # Exit a parse tree produced by compiladoresParser#instruccion.
     def exitInstruccion(self, ctx:compiladoresParser.InstruccionContext):                                      
         pass
                    
      # Enter a parse tree produced by compiladoresParser#bloque.
     def enterBloque(self, ctx:compiladoresParser.BloqueContext):                   
-        self.tablaSimbolos.addContext()        
+        self.tablaSimbolos.addContext()
+
 
     # Exit a parse tree produced by compiladoresParser#bloque.
     def exitBloque(self, ctx:compiladoresParser.BloqueContext):       
         print("termina el bloque " + ctx.getText())            
-        self.f.write(self.tablaSimbolos.ctxString())               
+        self.f.write(self.tablaSimbolos.ctxString())
         self.tablaSimbolos.deleteContext()        
                 
      # Enter a parse tree produced by compiladoresParser#declaracion.
@@ -64,11 +65,10 @@ class MiListener(ParseTreeListener):
         pass                              
 
     # Exit a parse tree produced by compiladoresParser#declaracion.
-    def exitDeclaracion(self, ctx:compiladoresParser.DeclaracionContext):        
-        variable = Variable()                 
-    
+    def exitDeclaracion(self, ctx:compiladoresParser.DeclaracionContext):                                  
         #Para variables inicializadas
-        if ctx.getChild(1).getChild(0) != None:            
+        if ctx.getChild(1).getChild(0) != None:
+            variable = Variable()
             variable.tipo = ctx.getChild(0).getChild(0)
             variable.nombre = ctx.getChild(1).getChild(0)
             variable.inicializada = True
@@ -77,19 +77,21 @@ class MiListener(ParseTreeListener):
         #Para variables declaradas
         elif ctx.getChild(1).getChild(0) == None and ctx.getChildCount() < 3:  
             for data in range(0, ctx.getChildCount()):            
-                if ctx.getChild(data).getChildCount() == 0:                           
+                if ctx.getChild(data).getChildCount() == 0:
+                    variable = Variable()                     
                     variable.nombre = str(ctx.getChild(data))                                
-                    variable.tipo = str(ctx.getChild(data - 1).getChild(0))
+                    variable.tipo = str(ctx.getChild(0).getChild(0))
                     variable.inicializada = False
                     variable.usada = False                    
                     self.tablaSimbolos.addID(variable)             
         else: #Significa que hay mas de una variable declarada int a,b,c...;
-            for data in range(1, ctx.getChildCount(), 2):                
-                if  ctx.getChild(data).getChildCount() == 0:                    
-                    variable.nombre = str(ctx.getChild(data))                                                                        
-                    variable.tipo = str(ctx.getChild(0).getChild(0))
-                    variable.inicializada = False
-                    variable.usada = False                    
+            for data in range(1, ctx.getChildCount(), 2):
+                variable = Variable()       
+                variable.tipo = str(ctx.getChild(0).getChild(0))
+                variable.inicializada = False
+                variable.usada = False                                    
+                if ctx.getChild(data).getChildCount() == 0:
+                    variable.nombre = str(ctx.getChild(data))                    
                     self.tablaSimbolos.addID(variable)
 
     # Enter a parse tree produced by compiladoresParser#asignacion.
@@ -100,7 +102,7 @@ class MiListener(ParseTreeListener):
     def exitAsignacion(self, ctx:compiladoresParser.AsignacionContext):     
         
         variableAsignada = Variable()
-        variableUsada = Variable()                       
+                              
         
         variableAsignada = self.tablaSimbolos.searchIDLocal(ctx.getChild(0))                
         
@@ -108,23 +110,27 @@ class MiListener(ParseTreeListener):
             variableAsignada.inicializada = True
         
         if ctx.getChild(2).getChild(0) != None: #Asignacion con operaciones             
-            try: #Busco variables del lado derecho, PRIMER OPERANDO, si no es numero al except
-                float(ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0)) 
-            except:
-                if ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0) != None:
-                    variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0))
+            if ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0) != None:
+                try: #Busco variables del lado derecho, PRIMER OPERANDO, si no es numero al except                
+                        float(ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0)) 
+                except:
+                        variableUsada = Variable()   
+                        variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2).getChild(0).getChild(0).getChild(0).getChild(0))                                                
+                        if variableUsada != None:
+                            variableUsada.usada = True
+            if ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0) != None:
+                try: #Busco variables en el segundo operando
+                    float(ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0))            
+                except:
+                    variableUsada = Variable()                     
+                    variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0))                
                     if variableUsada != None:
                         variableUsada.usada = True
-            try: #Busco variables en el segundo operando
-                float(ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0))            
-            except:
-                variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2).getChild(0).getChild(1).getChild(1).getChild(0).getChild(0))
-                if variableUsada != None:
-                    variableUsada.usada = True
         else: #Asignacion Sin operaciones ej: a = 3
             try:
                 float(ctx.getChild(2))
             except:
+                variableUsada = Variable() 
                 variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2))
                 if variableUsada != None:
                     variableUsada.usada = True
@@ -136,10 +142,7 @@ class MiListener(ParseTreeListener):
     # Exit a parse tree produced by compiladoresParser#decfuncion.
     def exitDecfuncion(self, ctx:compiladoresParser.DecfuncionContext):                                 
         funcion = Funcion()                        
-        tipoParametro = ""     
-                      
-        if self.tablaSimbolos.searchIDLocal(str(ctx.getChild(0).getChild(0))):
-            return                      
+        tipoParametro = ""                                                  
                                 
         for data in range(3, ctx.getChildCount() - 2):  
                 if ctx.getChild(data).getChildCount() != 0:                                                   
@@ -166,10 +169,7 @@ class MiListener(ParseTreeListener):
     # Exit a parse tree produced by compiladoresParser#deffuncion.
     def exitDeffuncion(self, ctx:compiladoresParser.DeffuncionContext):          
         funcion = Funcion()                        
-        tipoParametro = ""    
-        
-        if self.tablaSimbolos.searchIDLocal(str(ctx.getChild(0).getChild(0))):            
-            return        
+        tipoParametro = ""                    
         
         funcion.tipo = str(ctx.getChild(0).getChild(0))
         funcion.nombre = str(ctx.getChild(1))       
@@ -187,8 +187,8 @@ class MiListener(ParseTreeListener):
                 
         funcion.inicializada = True
         funcion.usada = False 
-        
-        self.tablaSimbolos.addID(funcion)
+                
+        self.tablaSimbolos.addID(funcion)        
 
     # Enter a parse tree produced by compiladoresParser#llamadafuncion.
     def enterLlamadafuncion(self, ctx:compiladoresParser.LlamadafuncionContext):

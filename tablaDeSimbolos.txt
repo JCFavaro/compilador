@@ -1,33 +1,61 @@
-------Contexto 0 -------
-------Fin del Contexto 0 -------
+------ Inicio Contexto -------
+------ Fin Contexto -------
 
-------Contexto 1 -------
-------Fin del Contexto 1 -------
+------ Inicio Contexto -------
+int suma ~~ fue inicializada: True ~~ fue usada: False
+------ Fin Contexto -------
 
-------Contexto 0 -------
-------Fin del Contexto 0 -------
+------ Inicio Contexto -------
+int funcionSuma ~~ fue inicializada: True ~~ fue usada: True
+------ Fin Contexto -------
 
-------Contexto 1 -------
-------Fin del Contexto 1 -------
+------ Inicio Contexto -------
+int unavariable ~~ fue inicializada: True ~~ fue usada: False
+int otravariable ~~ fue inicializada: True ~~ fue usada: False
+float a ~~ fue inicializada: False ~~ fue usada: False
+float b ~~ fue inicializada: False ~~ fue usada: False
+float c ~~ fue inicializada: False ~~ fue usada: False
+float d ~~ fue inicializada: False ~~ fue usada: False
+int p ~~ fue inicializada: False ~~ fue usada: False
+------ Fin Contexto -------
 
-------Contexto 2 -------
-------Fin del Contexto 2 -------
+------ Inicio Contexto -------
+int sumando ~~ fue inicializada: True ~~ fue usada: False
+------ Fin Contexto -------
 
-------Contexto 3 -------
-------Fin del Contexto 3 -------
+------ Inicio Contexto -------
+float ff ~~ fue inicializada: True ~~ fue usada: False
+------ Fin Contexto -------
 
-------Contexto 0 -------
-------Fin del Contexto 0 -------
+------ Inicio Contexto -------
+int funcionSuma ~~ fue inicializada: True ~~ fue usada: True
+------ Fin Contexto -------
 
-------Contexto 1 -------
-------Fin del Contexto 1 -------
+------ Inicio Contexto -------
+int unavariable ~~ fue inicializada: True ~~ fue usada: False
+int otravariable ~~ fue inicializada: True ~~ fue usada: False
+float a ~~ fue inicializada: False ~~ fue usada: False
+float b ~~ fue inicializada: False ~~ fue usada: False
+float c ~~ fue inicializada: False ~~ fue usada: False
+float d ~~ fue inicializada: False ~~ fue usada: False
+int p ~~ fue inicializada: False ~~ fue usada: False
+------ Fin Contexto -------
 
-------Contexto 2 -------
-------Fin del Contexto 2 -------
+------ Inicio Contexto -------
+int sumando ~~ fue inicializada: True ~~ fue usada: False
+------ Fin Contexto -------
 
-------Contexto 0 -------
-------Fin del Contexto 0 -------
+------ Inicio Contexto -------
+int funcionSuma ~~ fue inicializada: True ~~ fue usada: True
+------ Fin Contexto -------
 
-------Contexto 1 -------
-------Fin del Contexto 1 -------
+------ Inicio Contexto -------
+int unavariable ~~ fue inicializada: True ~~ fue usada: False
+int otravariable ~~ fue inicializada: True ~~ fue usada: False
+float a ~~ fue inicializada: False ~~ fue usada: False
+float b ~~ fue inicializada: False ~~ fue usada: False
+float c ~~ fue inicializada: False ~~ fue usada: False
+float d ~~ fue inicializada: False ~~ fue usada: False
+int p ~~ fue inicializada: False ~~ fue usada: False
+------ Fin Contexto -------
 

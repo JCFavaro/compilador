@@ -4,18 +4,18 @@ int funcionSuma(int operando1, int operando2){
 
 int main()
 {
-    int a = 3;
-    int b = 5;
-    float x, pro, ban, doss;
+    int unavariable = 3;
+    int otravariable = 5;
+    float a, b, c, d;
     int p;
 
-    funcionSuma(a, b);
+    funcionSuma(unavariable, unavariable);
 
-    if (a > 0)
+    if (unavariable > 0)
     {
-        int c = 5 + a;
-        while(a){
-            float ff = a + c;
+        int sumando = 5 + unavariable;
+        while(unavariable){
+            float ff = unavariable + sumando;
         }
     }
 }
