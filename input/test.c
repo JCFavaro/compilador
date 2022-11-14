@@ -5,11 +5,15 @@ int funcionSuma(int operando1, int operando2){
 int main()
 {
     int unavariable = 3;
-    int otravariable = 5;
+    int otravariable;
     float a, b, c, d;
     int p;
 
     a = 200;
+
+    variable = 5;
+
+    otravariable = 4;
 
     funcionSuma(unavariable, unavariable);
 

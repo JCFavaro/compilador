@@ -66,14 +66,14 @@ class MiListener(ParseTreeListener):
         pass                              
 
     # Exit a parse tree produced by compiladoresParser#declaracion.
-    def exitDeclaracion(self, ctx:compiladoresParser.DeclaracionContext):                                  
+    def exitDeclaracion(self, ctx:compiladoresParser.DeclaracionContext):
         #Para variables inicializadas
         if ctx.getChild(1).getChild(0) != None:
             variable = Variable()
             variable.tipo = ctx.getChild(0).getChild(0)
-            variable.nombre = ctx.getChild(1).getChild(0)
+            variable.nombre = ctx.getChild(1).getChild(0)            
             variable.inicializada = True
-            variable.usada = False
+            variable.usada = False            
             if self.tablaSimbolos.searchIDLocal(variable.nombre) == None:
                 self.tablaSimbolos.addID(variable)
             else:
@@ -109,26 +109,29 @@ class MiListener(ParseTreeListener):
         pass
 
     # Exit a parse tree produced by compiladoresParser#asignacion.
-    def exitAsignacion(self, ctx:compiladoresParser.AsignacionContext):     
-
-        variableAsignada = Variable()
-
-        variableAsignada = self.tablaSimbolos.searchIDLocal(ctx.getChild(0))        
+    def exitAsignacion(self, ctx:compiladoresParser.AsignacionContext):                     
+        variableAsignada = Variable()        
         
-        if variableAsignada != None:
-            variableAsignada.inicializada = True                               
-
+        tiposVar = {"int", "float", "string", "double", "char"}
+        
+        if ctx.parentCtx.getChild(0).getChild(0) != None and str(ctx.parentCtx.getChild(0).getChild(0)) not in tiposVar:
+            variableAsignada = self.tablaSimbolos.searchIDLocal(ctx.parentCtx.getChild(0).getChild(0))                    
+            if variableAsignada != None:
+                variableAsignada.inicializada = True
+            else:
+                print("Asignacion de variable no declarada", str(ctx.parentCtx.getChild(0).getChild(0)))
+            
         if ctx.getChild(2).getChild(0) != None: #Asignacion con operaciones                         
             operandos = ctx.getChild(2).getText()            
-            aux1 = re.split("[+*/-]", operandos)            
-            for op1 in aux1:                
+            aux1 = re.split("[+*/-]", operandos)
+            for op1 in aux1:
                 try:
                     float(op1)
                 except:
                     variableUsada = Variable()
-                    variableUsada = self.tablaSimbolos.searchIDLocal(op1)                              
-                    if variableUsada != None:                        
-                        variableUsada.usada = True                                               
+                    variableUsada = self.tablaSimbolos.searchIDLocal(op1)
+                    if variableUsada != None:
+                        variableUsada.usada = True                    
         else: #Asignacion Sin operaciones ej: a = 3
             try:
                 float(ctx.getChild(2))
@@ -136,7 +139,7 @@ class MiListener(ParseTreeListener):
                 variableUsada = Variable() 
                 variableUsada = self.tablaSimbolos.searchIDLocal(ctx.getChild(2))
                 if variableUsada != None:
-                    variableUsada.usada = True
+                    variableUsada.usada = True                
 
         # Enter a parse tree produced by compiladoresParser#decfuncion.
     def enterDecfuncion(self, ctx:compiladoresParser.DecfuncionContext):
@@ -166,7 +169,7 @@ class MiListener(ParseTreeListener):
         if self.tablaSimbolos.searchIDLocal(funcion.nombre) == None:
             self.tablaSimbolos.addID(funcion)
         else:
-            raise Exception("Funcion declarada varias veces")       
+            raise Exception("Funcion declarada varias veces")
 
     # Enter a parse tree produced by compiladoresParser#deffuncion.
     def enterDeffuncion(self, ctx:compiladoresParser.DeffuncionContext):
@@ -213,3 +216,5 @@ class MiListener(ParseTreeListener):
 
         if funcion != None:
             funcion.usada = True
+        else:
+            raise Exception("Funcion no declarada/definida " + str(nombre))

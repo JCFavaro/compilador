@@ -14,7 +14,7 @@ class Tabla(object):
         return self._instance
 
     def searchID(self, ID):#Aca busco en todos los contextos            
-        return ID in self.ts
+        return str(ID) in self.ts
                         
     def searchIDLocal(self, ID): #Busco en solo 1 contexto            
         for ctx in reversed(self.ts): #reversed para empezar desde -1
