@@ -58,7 +58,14 @@ class MiListener(ParseTreeListener):
     # Exit a parse tree produced by compiladoresParser#bloque.
     def exitBloque(self, ctx:compiladoresParser.BloqueContext):       
         print("termina el bloque " + ctx.getText())
-        self.f.write(self.tablaSimbolos.ctxString()) 
+        self.f.write(self.tablaSimbolos.ctxString())
+        for variables in self.tablaSimbolos.ts:
+            for var in variables:
+                nombre = self.tablaSimbolos.searchIDLocal(var)
+                if nombre.usada == False and nombre.inicializada == True:
+                    print("variable", nombre.nombre, "no usada")
+                elif nombre.inicializada == False:
+                    print("variable", nombre.nombre, "no inicializada")
         self.tablaSimbolos.deleteContext()        
 
      # Enter a parse tree produced by compiladoresParser#declaracion.
@@ -216,9 +223,9 @@ class MiListener(ParseTreeListener):
 
         if funcion != None:
             if funcion.inicializada == False:
-                print("Funcion declarada pero no definida", nombre)
+                print("Funcion", nombre, "declarada pero no definida")
             else:
                 funcion.usada = True
         else:
-            print("Funcion no declarada ni definida", nombre)
+            print("Funcion", nombre, "no declarada ni definida")
         
