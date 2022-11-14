@@ -2,6 +2,8 @@ int funcionSuma(int operando1, int operando2){
     int suma = operando1 + operando2;
 }
 
+float funcionSinDefinirrr();
+
 int main()
 {
     int unavariable = 3;
@@ -14,6 +16,8 @@ int main()
     variable = 5;
 
     otravariable = 4;
+
+    funcionSinDefinirrr();
 
     funcionSuma(unavariable, unavariable);
 

@@ -163,7 +163,7 @@ class MiListener(ParseTreeListener):
         funcion.tipo = str(ctx.getChild(0).getChild(0))
         funcion.nombre = str(ctx.getChild(1))                       
 
-        funcion.inicializada = True
+        funcion.inicializada = False
         funcion.usada = False
 
         if self.tablaSimbolos.searchIDLocal(funcion.nombre) == None:
@@ -215,6 +215,10 @@ class MiListener(ParseTreeListener):
         funcion = self.tablaSimbolos.searchIDLocal(nombre)
 
         if funcion != None:
-            funcion.usada = True
+            if funcion.inicializada == False:
+                print("Funcion declarada pero no definida", nombre)
+            else:
+                funcion.usada = True
         else:
-            raise Exception("Funcion no declarada/definida " + str(nombre))
+            print("Funcion no declarada ni definida", nombre)
+        

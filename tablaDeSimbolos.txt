@@ -26,6 +26,7 @@ int p ~~ fue inicializada: False ~~ fue usada: False
 
 ------ Inicio Contexto -------
 int funcionSuma ~~ fue inicializada: True ~~ fue usada: True
+float funcionSinDefinirrr ~~ fue inicializada: False ~~ fue usada: False
 int main ~~ fue inicializada: True ~~ fue usada: False
 ------ Fin Contexto -------
 
