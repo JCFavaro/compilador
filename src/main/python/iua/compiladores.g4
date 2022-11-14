@@ -8,6 +8,8 @@ PA: '(';
 PC: ')';
 LLA: '{';
 LLC: '}';
+CA: '[';
+CC: ']';
 PYC: ';';
 COMA: ',';
 
@@ -151,6 +153,7 @@ t: 	SUMA term t
 factor: ID 
 		| NUMERO 
 		| PA exp PC
+		| CA exp CC
 		;
 
 f: 	MULT factor f 

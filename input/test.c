@@ -15,7 +15,7 @@ int main()
 
     variable = 5;
 
-    otravariable = 4;
+    otravariable = (4 + 5 * [3 - 9]);
 
     funcionSinDefinirrr();
 
