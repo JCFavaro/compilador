@@ -19,7 +19,7 @@ class MiVisitor(compiladoresVisitor):
         print("\t\tBloque tiene " + str(ctx.getChildCount()) + " hijos")
         print("\t\t\tHijo 0 -> " + ctx.getChild(0).getText())
         print("\t\t\tHijo 2 -> " + ctx.getChild(2).getText())
-        r = super().visitInstrucciones(ctx.getChild(1))    
+        r = super().visitInstrucciones(ctx.getChild(1))
         print("\tSalimos del contexto " + str(self.contexto))
         self.contexto -= 1
         return

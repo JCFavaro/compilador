@@ -81,13 +81,13 @@ instruccion:
 
 bloque: LLA instrucciones LLC;
 
-asignacion:  ID ASSIG NUMERO 
-			| ID ASSIG ID 
-			| ID ASSIG oparit;
+asignacion: ID ASSIG NUMERO
+			| ID ASSIG ID
+			| ID ASSIG oparit;			
 
 declaracion:
 	tdato ID	
-	| tdato (ID COMA*)+ 	
+	| tdato (ID COMA*)+
 	| tdato asignacion 
 	| tdato asignacion COMA declaracion
 	| asignacion COMA declaracion	
@@ -174,7 +174,6 @@ deffuncion: tdato ID PA PC bloque
 			| tdato ID PA ((tdato ID)+ COMA*)* PC bloque			
 			; 
 
-llamadafuncion: ID PA PC PYC
-				| ID PA ID PC PYC
+llamadafuncion: ID PA PC PYC				
 				| ID PA ((ID)+ COMA*)* PC PYC
 				;

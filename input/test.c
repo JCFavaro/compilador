@@ -8,7 +8,7 @@ int main()
 {
     int unavariable = 3;
     int otravariable;
-    float a, b, c, d;
+    float a, b, c = 0, d;
     int p;
 
     a = 200;
